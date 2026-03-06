@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neural-green: #00ff88;
+  --neural-purple: #a855f7;
+  --neural-pink: #ff006e;
+  --neural-dark: #0a0a0f;
+  --neural-panel: #12121a;
+  --neural-border: #1a1a2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--neural-dark);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Pixel-art rendering for all canvases */
+canvas {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neural-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neural-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a4e;
+}
+
+/* Glow effects */
+.glow-green {
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.3), inset 0 0 8px rgba(0, 255, 136, 0.05);
+}
+
+.glow-purple {
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.3), inset 0 0 8px rgba(168, 85, 247, 0.05);
+}
+
+.glow-pink {
+  box-shadow: 0 0 8px rgba(255, 0, 110, 0.3), inset 0 0 8px rgba(255, 0, 110, 0.05);
+}
+
+.glow-text-green {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.glow-text-purple {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.glow-text-pink {
+  text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+}
+
+/* Pulsing indicator */
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 4px rgba(0, 255, 136, 0.5);
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.8);
+  }
+}
+
+.status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-pulse-red {
+  animation: statusPulseRed 1.5s ease-in-out infinite;
+}
+
+@keyframes statusPulseRed {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 4px rgba(255, 0, 110, 0.5);
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 12px rgba(255, 0, 110, 0.8);
+  }
+}
+
+/* Scan line overlay effect */
+.scan-lines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Panel styling */
+.neural-panel {
+  background: var(--neural-panel);
+  border: 1px solid var(--neural-border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 136, 0.3),
+    transparent
+  );
+}
+
+/* Energy bar gradient */
+.energy-bar {
+  background: linear-gradient(90deg, #ff006e, #ff6b00, #ffcc00, #00ff88);
+  transition: width 0.3s ease;
+}
+
+/* Reward flash */
+@keyframes rewardFlash {
+  0% {
+    background-color: rgba(0, 255, 136, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes punishFlash {
+  0% {
+    background-color: rgba(255, 0, 110, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.reward-flash {
+  animation: rewardFlash 0.5s ease-out;
+}
+
+.punish-flash {
+  animation: punishFlash 0.5s ease-out;
+}
+
+/* Sparkline container */
+.sparkline-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Number displays */
+.mono-number {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}

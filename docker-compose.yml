@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - NEUROKITTY_ENV=production
+      - NEUROKITTY_WS_PORT=8000
+      - NEUROKITTY_CULTURE_MODE=simulation
+      # Set to 'cl1' when connected to real CL1 hardware
+      # - NEUROKITTY_CULTURE_MODE=cl1
+      # - CL1_API_HOST=192.168.1.100
+      # - CL1_API_PORT=5050
+    volumes:
+      - ./recordings:/app/recordings
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_WS_URL=ws://backend:8000/ws
+      - NEXT_PUBLIC_API_URL=http://backend:8000/api
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Optional: Grafana for long-term neural activity monitoring
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - "3001:3000"
+  #   volumes:
+  #     - grafana-data:/var/lib/grafana
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=neurokitty
+
+volumes:
+  grafana-data:
