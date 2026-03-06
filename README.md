@@ -2,6 +2,10 @@
 
 A biological neural culture (Cortical Labs CL1) controls a virtual cat in a 2D world. All behavior comes from real spike patterns in ~800k @CorticalLabs neurons grown on a multielectrode array.
 
+<img width="1416" height="815" alt="image" src="https://github.com/user-attachments/assets/ac721742-5497-4568-aab9-b23ec3313dbf" />
+
+
+
 ## What is this?
 
 NEUROKITTY is a closed-loop biological computing experiment. A living neural culture — approximately 800,000 cortical neurons grown on a Cortical Labs CL1 multielectrode array (MEA) — directly controls a virtual cat navigating a 2D pixel-art world. The cat forages for berries, avoids enemies, and explores its environment using nothing but biological neural activity as its brain.
